@@ -1,8 +1,3 @@
-/**
- * API client – replace with generated client from OpenAPI/Swagger when spec is available.
- * Base URL and auth are configurable via env.
- */
-
 const getBaseUrl = () => import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 export type RequestConfig = RequestInit & {

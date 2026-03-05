@@ -100,7 +100,15 @@ export function useWallet() {
 
   useEffect(() => {
     if (!address) return;
-    refreshMessages();
+
+    // Defer refresh to avoid synchronous state updates in effect body.
+    const timer = window.setTimeout(() => {
+      void refreshMessages();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, [address, refreshMessages]);
 
   useEffect(() => {

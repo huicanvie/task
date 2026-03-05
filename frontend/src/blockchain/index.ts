@@ -1,7 +1,10 @@
 export { CHAIN_ID, CONTRACT_ADDRESS, SUPPORTED_CHAINS } from './config';
 export {
+  chain,
   publicClient,
-  EXAMPLE_ABI,
-  readBalance,
-  writeTransfer,
+  MESSAGE_BOARD_ABI,
+  readMessageCount,
+  readMessages,
+  writePostMessage,
+  type MessageItem,
 } from './contract';

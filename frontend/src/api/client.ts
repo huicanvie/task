@@ -11,7 +11,8 @@ export type RequestConfig = RequestInit & {
 
 async function buildUrl(path: string, params?: RequestConfig['params']): Promise<string> {
   const base = getBaseUrl().replace(/\/$/, '');
-  const url = new URL(path.startsWith('/') ? path : `/${path}`, base);
+  const normalizedPath = path.replace(/^\/+/, '');
+  const url = new URL(`${base}/${normalizedPath}`);
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== '') url.searchParams.set(key, String(value));
@@ -34,7 +35,7 @@ export async function apiRequest<T>(
   if (token) {
     (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
   }
-  const res = await fetch(url, { ...init, headers });
+  const res = await fetch(url, { ...init, headers, credentials: init.credentials ?? 'include' });
   if (!res.ok) {
     const body = await res.text();
     let message = body;
